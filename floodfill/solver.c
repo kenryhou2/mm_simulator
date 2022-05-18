@@ -56,7 +56,7 @@ Coord peek() {
 int isEmpty() {
 	if(itemCount == 0)
 	{
-		debug_log("queue is empty");
+		////debug_log("queue is empty");
 		return 1;
 	}
    return 0;
@@ -65,7 +65,7 @@ int isEmpty() {
 int isFull() {
 	if(itemCount == MAX)
 	{
-		debug_log("queue is full");
+		////debug_log("queue is full");
 		return 1;
 	}
 	return 0;
@@ -76,7 +76,7 @@ int size() {
 }  
 
 void insert(Coord data) {
-	fprintf(stderr,"inserting col:%d, row:%d\n",data.col,data.row);
+	//fprintf(stderr,"inserting col:%d, row:%d\n",data.col,data.row);
 
    if(!isFull()) {
 	
@@ -91,7 +91,7 @@ void insert(Coord data) {
 
 Coord removeData() {
    Coord data = coordArray[front++];
-   fprintf(stderr,"removing col:%d, row:%d\n",data.col,data.row);
+   //fprintf(stderr,"removing col:%d, row:%d\n",data.col,data.row);
    if(front == MAX) {
       front = 0;
    }
@@ -150,7 +150,7 @@ void print_mouse_info(Pose* p_ptr)
     strcat(src, head);
     strcat(src, " Man: ");
     strcat(src, man_str);
-    debug_log(src);
+    ////debug_log(src);
 }
 
 int isAtCenter(int col, int row)
@@ -164,7 +164,7 @@ int isAtCenter(int col, int row)
     )
     {
         return 1;
-        debug_log("center reached");
+        ////debug_log("center reached");
     }
     else
     {
@@ -176,7 +176,7 @@ int isOB(int col, int row)
 {
     if(row < 0 || row > 15 || col < 0 || col > 15)
     {
-        debug_log("OB sensed");
+        ////debug_log("OB sensed");
         return 1;
     }
     else
@@ -298,7 +298,7 @@ void setWall(int col, int row, char* dir)
     }
     if(dir == "L")
     {
-        debug_log("Error in setting wall");
+        ////debug_log("Error in setting wall");
     }
 }
 
@@ -318,7 +318,7 @@ void update_Man_display()
 
 void print_Q()
 {
-	debug_log("printing Q:");
+	//debug_log("printing Q:");
 	for(int i = front; i < rear+1; i++)
 	{
 		fprintf(stderr,"index:%d, col:%drow:%d\n", i,coordArray[i].col, coordArray[i].row);
@@ -327,7 +327,7 @@ void print_Q()
 
 void run_floodfill(Pose* mouse_pose)
 {
-    debug_log("running floodfill");
+    //debug_log("running floodfill");
     /*
     Add current cell to queue
     While queue is not empty:
@@ -347,9 +347,9 @@ void run_floodfill(Pose* mouse_pose)
         Coord sample_coord = removeData();
         int temp_sample_col = sample_coord.col; //capture queue removed data immedately...
         int temp_sample_row = sample_coord.row;
-        fprintf(stderr, "queue state is empty?: %d\n",isEmpty());
+        //fprintf(stderr, "queue state is empty?: %d\n",isEmpty());
         print_Q();
-        fprintf(stderr,"sample cell is col:%d row:%d\n", temp_sample_col, temp_sample_row);
+        //fprintf(stderr,"sample cell is col:%d row:%d\n", temp_sample_col, temp_sample_row);
         int current_Man = getMan(temp_sample_col, temp_sample_row);
         int min_Man = 999;
         //print_Q();
@@ -373,10 +373,10 @@ void run_floodfill(Pose* mouse_pose)
         // fprintf(stderr,"sample cell is col:%d row:%d\n", temp_sample_col, temp_sample_row);
         if(!isOB(N_mouse_coord.col,N_mouse_coord.row))
         {
-            debug_log("N cell is in bounds");
+            //debug_log("N cell is in bounds");
             if (!isWall(N_mouse_coord.col,N_mouse_coord.row,"S"))
             {
-                debug_log("no sWall in N cell");
+                //debug_log("no sWall in N cell");
                 int nman = getMan(N_mouse_coord.col,N_mouse_coord.row); 
                 if(nman < min_Man)
                 {
@@ -387,10 +387,10 @@ void run_floodfill(Pose* mouse_pose)
 
         if(!isOB(W_mouse_coord.col,W_mouse_coord.row))
         {
-            debug_log("W cell is in bounds");
+            //debug_log("W cell is in bounds");
             if(!isWall(W_mouse_coord.col,W_mouse_coord.row,"E"))
             {
-                debug_log("no eWall in W cell");
+                //debug_log("no eWall in W cell");
                 int wman = getMan(W_mouse_coord.col,W_mouse_coord.row); 
                 if(wman < min_Man)
                 {
@@ -401,10 +401,10 @@ void run_floodfill(Pose* mouse_pose)
 
         if(!isOB(E_mouse_coord.col,E_mouse_coord.row))
         {
-            debug_log("E cell is in bounds");
+            //debug_log("E cell is in bounds");
             if(!isWall(E_mouse_coord.col,E_mouse_coord.row,"W"))
             {
-                debug_log("no wWall in E cell");
+                //debug_log("no wWall in E cell");
                 int eman = getMan(E_mouse_coord.col,E_mouse_coord.row); 
                 if(eman < min_Man)
                 {
@@ -415,10 +415,10 @@ void run_floodfill(Pose* mouse_pose)
         
         if(!isOB(S_mouse_coord.col,S_mouse_coord.row))
         {
-            debug_log("S cell is in bounds");
+            //debug_log("S cell is in bounds");
             if(!isWall(S_mouse_coord.col,S_mouse_coord.row,"N"))
             {
-                debug_log("no nWall in S cell");
+                //debug_log("no nWall in S cell");
                 int sman = getMan(S_mouse_coord.col,S_mouse_coord.row); 
                 if(sman < min_Man)
                 {
@@ -429,54 +429,54 @@ void run_floodfill(Pose* mouse_pose)
 
                
         //print_Q();
-        fprintf(stderr,"sample cell man is:%d min man is: %d\n",current_Man, min_Man); // at this point, current man should be less than min man..
+        //fprintf(stderr,"sample cell man is:%d min man is: %d\n",current_Man, min_Man); // at this point, current man should be less than min man..
 
         if(current_Man < min_Man || current_Man == min_Man)
         {
-            debug_log("current man is <= minMan");
+            //debug_log("current man is <= minMan");
             int newman = min_Man + 1;
             //setMan(sample_coord->col,sample_coord->row, newman); //adding 1 to current coord
             setMan(temp_sample_col,temp_sample_row, newman);
             //int temp = getMan(sample_coord->col,sample_coord->row);
             int temp = getMan(temp_sample_col,temp_sample_row);
-            fprintf(stderr,"current man is:%d\n", temp);
+            //fprintf(stderr,"current man is:%d\n", temp);
 
             if(!isOB(N_mouse_coord.col,N_mouse_coord.row))
             {
-                //debug_log("N cell is in bounds");
+                ////debug_log("N cell is in bounds");
                 if (!isWall(N_mouse_coord.col,N_mouse_coord.row,"S"))
                 {
-                	debug_log("qing Ncell");
+                	//debug_log("qing Ncell");
                     insert(N_mouse_coord);
                 }
             }
 
             if(!isOB(W_mouse_coord.col,W_mouse_coord.row))
             {
-                //debug_log("W cell is in bounds");
+                ////debug_log("W cell is in bounds");
                 if(!isWall(W_mouse_coord.col,W_mouse_coord.row,"E"))
                 {
-                	debug_log("qing Wcell");
+                	//debug_log("qing Wcell");
                     insert(W_mouse_coord);
                 }
             }
 
             if(!isOB(E_mouse_coord.col,E_mouse_coord.row))
             {
-                //debug_log("E cell is in bounds");
+                ////debug_log("E cell is in bounds");
                 if(!isWall(E_mouse_coord.col,E_mouse_coord.row,"W"))
                 {
-                	debug_log("qing Ecell");
+                	//debug_log("qing Ecell");
                     insert(E_mouse_coord);
                 }
             }
             
             if(!isOB(S_mouse_coord.col,S_mouse_coord.row))
             {
-                //debug_log("S cell is in bounds");
+                ////debug_log("S cell is in bounds");
                 if(!isWall(S_mouse_coord.col,S_mouse_coord.row,"N"))
                 {
-                	debug_log("qing Scell");
+                	//debug_log("qing Scell");
                     insert(S_mouse_coord);
                 }
             }
@@ -491,7 +491,7 @@ int nextMovement(Pose* mouse_pose)
 	update_Man_display();
     if(isAtCenter(mouse_pose->col,mouse_pose->row))
     {
-        debug_log("center reached");
+        //debug_log("center reached");
         return 6; // return idle
     }
 
@@ -518,19 +518,19 @@ int nextMovement(Pose* mouse_pose)
     //setting walls
     if(API_wallFront())
     {
-        debug_log("wall front");
+        //debug_log("wall front");
         setWall(mouse_pose->col,mouse_pose->row,mouse_pose->g_heading_str);
     }
 
     if(API_wallLeft())
     {
-        debug_log("wall left");
+        //debug_log("wall left");
         setWall(mouse_pose->col,mouse_pose->row,counterCW(mouse_pose->g_heading_str));
     }
 
     if(API_wallRight())
     {
-        debug_log("wall right");
+        //debug_log("wall right");
         setWall(mouse_pose->col,mouse_pose->row,CW(mouse_pose->g_heading_str));
     }
 
@@ -538,10 +538,10 @@ int nextMovement(Pose* mouse_pose)
 
     if(!isOB(N_mouse_coord.col,N_mouse_coord.row))
     {
-        debug_log("N cell is in bounds");
+        //debug_log("N cell is in bounds");
         if (!isWall(N_mouse_coord.col,N_mouse_coord.row,"S"))
         {
-            debug_log("no sWall in N cell");
+            //debug_log("no sWall in N cell");
             int nman = getMan(N_mouse_coord.col,N_mouse_coord.row); 
             if(nman < next_min_Man)
             {
@@ -553,10 +553,10 @@ int nextMovement(Pose* mouse_pose)
 
     if(!isOB(W_mouse_coord.col,W_mouse_coord.row))
     {
-        debug_log("W cell is in bounds");
+        //debug_log("W cell is in bounds");
         if(!isWall(W_mouse_coord.col,W_mouse_coord.row,"E"))
         {
-            debug_log("no eWall in W cell");
+            //debug_log("no eWall in W cell");
             int wman = getMan(W_mouse_coord.col,W_mouse_coord.row); 
             if(wman < next_min_Man)
             {
@@ -568,10 +568,10 @@ int nextMovement(Pose* mouse_pose)
 
     if(!isOB(E_mouse_coord.col,E_mouse_coord.row))
     {
-        debug_log("E cell is in bounds");
+        //debug_log("E cell is in bounds");
         if(!isWall(E_mouse_coord.col,E_mouse_coord.row,"W"))
         {
-            debug_log("no wWall in E cell");
+            //debug_log("no wWall in E cell");
             int eman = getMan(E_mouse_coord.col,E_mouse_coord.row); 
             if(eman < next_min_Man)
             {
@@ -583,10 +583,10 @@ int nextMovement(Pose* mouse_pose)
     
     if(!isOB(S_mouse_coord.col,S_mouse_coord.row))
     {
-        debug_log("S cell is in bounds");
+        //debug_log("S cell is in bounds");
         if(!isWall(S_mouse_coord.col,S_mouse_coord.row,"N"))
         {
-            debug_log("no nWall in S cell");
+            //debug_log("no nWall in S cell");
             int sman = getMan(S_mouse_coord.col,S_mouse_coord.row); 
             if(sman < next_min_Man)
             {
@@ -602,13 +602,13 @@ int nextMovement(Pose* mouse_pose)
     {
         run_floodfill(mouse_pose);
         update_Man_display();
-        fprintf(stderr,"curr man:%d\n",getMan(mouse_pose->col,mouse_pose->row));
-        debug_log("finished floodfill");
+        //fprintf(stderr,"curr man:%d\n",getMan(mouse_pose->col,mouse_pose->row));
+        //debug_log("finished floodfill");
         return 7;
     }
     
-    debug_log("next heading: ");
-	debug_log(&next_Heading);
+    //debug_log("next heading: ");
+	//debug_log(&next_Heading);
 	//at this point we should have a min next heading and man number to traverse to.
 	if(next_Heading == 'N')
     {
@@ -715,7 +715,7 @@ int nextMovement(Pose* mouse_pose)
 
     // else if(next_Heading == 'L')
     // {
-    //     debug_log("no next heading computed, taking the L.");
+    //     //debug_log("no next heading computed, taking the L.");
     //     return 6;
     // }
 }
@@ -735,7 +735,7 @@ int doNextMove(Pose* mouse_pose) {
     //nextMove should be a value 0-6
 
     char nextMove_c = nextMove + '0';
-    debug_log(&nextMove_c);
+    //////debug_log(&nextMove_c);
     
 
     switch(nextMove)
@@ -769,11 +769,23 @@ int doNextMove(Pose* mouse_pose) {
             API_turnRight();
             return 1;
             break;
-        case 6: //finish program
-            return 0;
+        case 6: //reached center
+            
+            if(API_wasReset())
+            {
+            	API_ackReset();
+            	init_mouse(mouse_pose);
+            	debug_log("reset pressed");
+            	return 1;
+            }
+            else
+            {
+            	debug_log("program finished");
+            	return 0; //finish program
+            }
             break;
         case 7:
-        	return 1; //cycle thru for floodfill.
+        	return 1; //cycle thru for floodfill
         	break;
         case 8:
         	API_turnRight(); //turn 180 to rightside
@@ -832,6 +844,6 @@ Action solver() {
     {
         loop = doNextMove(&mouse_pose);
     }
-    debug_log("finished run");
+    //////debug_log("finished run");
 }
 
